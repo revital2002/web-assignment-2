@@ -35,12 +35,12 @@ export const startServer = async (): Promise<ReturnType<Express['listen']> | nul
   });
 };
 
-export const maybeStartServer = (): void => {
+export const startServerInProd = (): void => {
   if (process.env.NODE_ENV !== 'test') {
     startServer();
   }
 };
 
-maybeStartServer();
+startServerInProd();
 
 export default app;
