@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import mongoose from "mongoose";
 import path from "path";
 import dotenv from "dotenv";
+import swaggerSetup from "./swagger";
 import routes from "./routes/index";
 
 dotenv.config({ path: path.join(__dirname, "./.env") });
@@ -14,12 +15,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", routes);
 
+// Swagger documentation setup
+swaggerSetup(app);
+
 export const startServer = async (): Promise<ReturnType<
   Express["listen"]
 > | null> => {
   try {
     console.log("\nTrying to connect to MongoDB...");
-    await mongoose.connect(process.env.MONGO_URI!);
+    await mongoose.connect(process.env.DB_CONNECT!);
     console.log("MongoDB connected successfully");
   } catch (exception: any) {
     console.error(exception.message);
