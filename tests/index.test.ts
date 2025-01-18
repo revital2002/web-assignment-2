@@ -87,7 +87,7 @@ describe('Main Server Tests', () => {
     it('should call startServer if DB_CONNECT_TEST is set', () => {
         process.env.NODE_ENV = 'development';
         const mockStartServer = jest.spyOn(MainModule, 'startServer').mockImplementation(() => Promise.resolve(null));
-        MainModule.maybeStartServer();
+        MainModule.startServerInProd();
         expect(mockStartServer).toHaveBeenCalled();
         mockStartServer.mockRestore();
     });
@@ -95,7 +95,7 @@ describe('Main Server Tests', () => {
     it('should not call startServer if DB_CONNECT_TEST is not set', () => {
         process.env.NODE_ENV = 'test';
         const mockStartServer = jest.spyOn(MainModule, 'startServer').mockImplementation(() => Promise.resolve(null));
-        MainModule.maybeStartServer();
+        MainModule.startServerInProd();
         expect(mockStartServer).not.toHaveBeenCalled();
         mockStartServer.mockRestore();
     });
